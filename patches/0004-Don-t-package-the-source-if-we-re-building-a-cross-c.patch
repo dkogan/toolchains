@@ -1,0 +1,29 @@
+From 650208cb8c139c18554556b3e24e63fb06a999f8 Mon Sep 17 00:00:00 2001
+From: Dima Kogan <dima@oblong.com>
+Date: Sat, 8 Feb 2014 08:06:55 +0000
+Subject: [PATCH 4/6] Don't package the source if we're building a cross
+ compiler
+
+---
+ rules.defs | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/rules.defs b/rules.defs
+index da5ce1a..a680d1c 100644
+--- a/rules.defs
++++ b/rules.defs
+@@ -943,8 +943,11 @@ with_nls := $(call envfilt, nls, , , $(with_nls))
+ with_libnof := no
+ 
+ ifneq (,$(findstring gcc-4,$(PKGSOURCE)))
++ifneq ($(DEB_CROSS),yes)
+   with_source := yes
+ endif
++endif
++
+ with_source := $(call envfilt, source, , , $(with_source))
+ 
+ ifeq ($(with_cdev),yes)
+-- 
+2.0.0
+

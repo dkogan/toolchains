@@ -1,0 +1,44 @@
+From 00efa516aa0e54a59384255f0022ddda13955ee8 Mon Sep 17 00:00:00 2001
+From: Dima Kogan <dima@oblong.com>
+Date: Sat, 8 Feb 2014 08:16:13 +0000
+Subject: [PATCH 5/6] Don't build libraries if we're building a cross compiler
+ using the host's libraries
+
+---
+ rules.defs | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
+
+diff --git a/rules.defs b/rules.defs
+index a680d1c..9b7b19a 100644
+--- a/rules.defs
++++ b/rules.defs
+@@ -341,13 +341,19 @@ endif
+ # basic config
+ 
+ # common things ---------------
+-# build common packages, where package names don't differ in different
+-# gcc versions (fixincludes, libgcj-common) ...
+-with_common_pkgs := yes
+-# ... and some libraries, which do not change (libgcc1, libssp0).
+-with_common_libs := yes
+-# XXX: should with_common_libs be "yes" only if this is the default compiler
+-# version on the targeted arch?
++# build common packages, where package names don't differ in different gcc
++# versions (fixincludes, libgcj-common) and some libraries, which do not change
++# (libgcc1, libssp0).
++#
++# Do NOT build those things if we're building a cross compiler and relying on
++# the host's libraries
++ifeq ($(DEB_CROSS)-$(with_deps_on_target_arch_pkgs),yes-yes)
++  with_common_pkgs := no
++  with_common_libs := no
++else
++  with_common_pkgs := yes
++  with_common_libs := yes
++endif
+ 
+ # is this a multiarch-enabled build?
+ ifeq (,$(filter $(distrelease),lenny etch squeeze dapper hardy jaunty karmic lucid maverick))
+-- 
+2.0.0
+

@@ -1,0 +1,26 @@
+From a404d4eb05c9fb6bf544bfb04bf181922500b556 Mon Sep 17 00:00:00 2001
+From: Dima Kogan <dima@secretsauce.net>
+Date: Mon, 24 Mar 2014 22:02:03 +0000
+Subject: [PATCH 2/6] D now respects $(d_no_cross) like other languages
+
+---
+ rules.defs | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/rules.defs b/rules.defs
+index 855dda9..386cacc 100644
+--- a/rules.defs
++++ b/rules.defs
+@@ -783,6 +783,9 @@ endif
+ ifeq ($(d_no_snap)-$(single_package),yes-yes)
+   with_d := disabled for snapshot build
+ endif
++ifeq ($(d_no_cross)-$(DEB_CROSS),yes-yes)
++  with_d := disabled for cross compiler package
++endif
+ with_d := $(call envfilt, d, , , $(with_d))
+ 
+ ifeq ($(with_base_only),yes)
+-- 
+2.0.0
+

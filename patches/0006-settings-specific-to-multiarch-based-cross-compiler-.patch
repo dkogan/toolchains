@@ -1,0 +1,43 @@
+From b2a2e97f37f8b55dcbdaa12600c6f41ec8d09793 Mon Sep 17 00:00:00 2001
+From: Dima Kogan <dima@oblong.com>
+Date: Sat, 8 Feb 2014 09:29:14 +0000
+Subject: [PATCH 6/6] settings specific to multiarch-based cross-compiler
+ building
+
+I don't build compilers for    D
+I do    build compilers for    C,C++,fortran,go,objc,objcxx,java
+---
+ rules.defs | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/rules.defs b/rules.defs
+index 9b7b19a..45b60bf 100644
+--- a/rules.defs
++++ b/rules.defs
+@@ -614,6 +614,7 @@ endif
+ 
+ java_no_cpus := # arm64 mips mipsel
+ java_no_systems :=
++java_no_cross := no
+ 
+ ifneq ($(single_package),yes)
+   with_separate_libgcj := yes
+@@ -717,7 +718,6 @@ endif
+ # - To build gcc and go from separate sources:
+ #   with_separate_libgo=yes, with_standalone_go=no
+ 
+-go_no_cross := yes
+ go_no_cross := no
+ 
+ ifneq (,$(findstring gccgo, $(PKGSOURCE)))
+@@ -831,7 +831,6 @@ ifeq ($(with_d),yes)
+ endif
+ 
+ # Fortran 95 -------------------
+-fortran_no_cross := yes
+ fortran_no_cross := no
+ 
+ ifneq ($(with_base_only),yes)
+-- 
+2.0.0
+

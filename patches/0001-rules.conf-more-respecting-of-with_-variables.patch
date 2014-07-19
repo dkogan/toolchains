@@ -1,0 +1,117 @@
+From 740196b2735605b0b3763597597ecedb28165c35 Mon Sep 17 00:00:00 2001
+From: Dima Kogan <dima@secretsauce.net>
+Date: Mon, 24 Mar 2014 22:00:39 +0000
+Subject: [PATCH 1/6] rules.conf more respecting of with_ variables
+
+various addons, languages are now added ONLY if their corresponding with_
+variable are active. As a result, the set of things we BUILD more closely
+matches the set of things we PACKAGE. These things are
+
+cdev
+c++dev
+fdev
+objcdev
+objppdev
+libtsan
+objc
+objpp
+ada
+java
+source
+multilib
+---
+ rules.conf | 57 ++++++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 48 insertions(+), 9 deletions(-)
+
+diff --git a/rules.conf b/rules.conf
+index aee143e..df5cdab 100644
+--- a/rules.conf
++++ b/rules.conf
+@@ -651,14 +651,47 @@ ifdef DEB_STAGE
+     endif
+   endif
+ else
+-languages = c c++ fortran objc objpp
++languages = c c++
++ifeq ($(with_fortran),yes)
++    languages += fortran
++endif
++ifeq ($(with_objc),yes)
++    languages += objc
++endif
++ifeq ($(with_objcxx),yes)
++    languages += objcpp
++endif
+ ifeq ($(with_gccbase),yes)
+     addons += gccbase
+ endif
+ ifeq ($(with_gccxbase),yes)
+     addons += gccxbase
+ endif
+-addons += cdev c++dev fdev objcdev source objppdev multilib
++
++ifeq ($(with_dev),yes)
++  ifeq ($(with_cdev),yes)
++    addons += cdev
++  endif
++  ifeq ($(with_cxxdev),yes)
++    addons += c++dev
++  endif
++  ifeq ($(with_fdev),yes)
++    addons += fdev
++  endif
++  ifeq ($(with_objcdev),yes)
++    addons += objcdev
++  endif
++
++  addons += objppdev
++
++  ifeq ($(with_source),yes)
++    addons += source
++  endif
++  ifeq ($(multilib),yes)
++    addons += multilib
++  endif
++endif
++
+ addons += plugindev
+ addons += $(if $(findstring armel,$(biarchhfarchs)),armml)
+ addons += $(if $(findstring armhf,$(biarchsfarchs)),armml)
+@@ -726,7 +759,6 @@ ifeq ($(with_liblsan),yes)
+   #addons += $(if $(findstring armel,$(biarchhfarchs)),libhflsan)
+   #addons += $(if $(findstring armhf,$(biarchsfarchs)),libsflsan)
+ endif
+-  addons += libtsan
+ ifeq ($(with_libtsan),yes)
+   addons += libtsan #lib32tsan lib64tsan libn32tsan
+   #addons += $(if $(findstring amd64,$(biarchx32archs)),libx32tsan)
+@@ -773,13 +805,20 @@ ifeq ($(with_go),yes)
+   endif
+ endif
+ 
+-  languages += ada
+-  addons += libgnat libs source # libgmath libnof lib64gnat ssp
++  ifeq ($(with_ada),yes)
++    languages += ada
++    addons += libgnat libs # libgmath libnof lib64gnat ssp
++    ifeq ($(with_source),yes)
++      addons += source
++    endif
++  endif
+ 
+-  languages += java
+-  addons += gcj
+-  ifneq ($(DEB_CROSS),yes)
+-    addons += libgcj libgcjdev gcjdoc gcjsrc
++  ifeq ($(with_java),yes)
++    languages += java
++    addons += gcj
++    ifneq ($(DEB_CROSS),yes)
++      addons += libgcj libgcjdev gcjdoc gcjsrc
++    endif
+   endif
+ 
+   ifneq ($(DEB_CROSS),yes)
+-- 
+2.0.0
+
