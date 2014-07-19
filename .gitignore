@@ -1,0 +1,5 @@
+*.deb
+*.changes
+*.dsc
+*~
+*.gz
