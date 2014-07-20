@@ -46,6 +46,12 @@ function buildarch {
                                   {echo "WARNING: couldn't install gcc dependencies for arch $arch. Skipping arch";
                                    return}
 
+
+    # I tweak the source name so that each arch generates a different Debian upload
+    perl -p -i -e "s/^gcc-4.9\S*/gcc-4.9-$arch/ if $. == 1" debian/changelog
+    perl -p -i -e "s/^Source:\s*gcc-4.9\S*/Source: gcc-4.9-$arch/" debian/control
+
+    # And now I build
     DEB_TARGET_ARCH=$arch DEB_CROSS_NO_BIARCH=yes with_deps_on_target_arch_pkgs=yes dpkg-buildpackage -us -uc -b || return
 
     killdeps || return
