@@ -49,11 +49,25 @@ deb     http://toolchains.secretsauce.net unstable main
 deb-src http://toolchains.secretsauce.net unstable main
 #+END_EXAMPLE
 
-To tell APT to trust these packages, do
+Tell APT to pull in packages for the target architecture. For instance:
+
+#+BEGIN_EXAMPLE
+dpkg --add-architecture armel
+#+END_EXAMPLE
+
+Tell APT to trust these packages, do
 
 #+BEGIN_EXAMPLE
 wget -q -O - http://toolchains.secretsauce.net/key.gpg | sudo apt-key add -
 #+END_EXAMPLE
+
+Now we're ready to go:
+
+#+BEGIN_EXAMPLE
+aptitude update
+aptitude install gcc-4.9-arm-linux-gnueabi
+#+END_EXAMPLE
+
 
 * Sources
 
