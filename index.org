@@ -23,7 +23,7 @@ attempt to build compilers targeting
 - powerpc
 
 Some subset of these usually fails, and will not be built for that week. As of
-this writing (2014-07-20), mipsel and powerpc are failing. The compiler for the
+this writing (2014-07-20), mipsel and powerpc are failing. Compilers for the
 following languages are built:
 
 - C
@@ -37,8 +37,8 @@ following languages are built:
 *Packages are generated weekly by a script and not tested by anybody. Use at
 your own risk.*
 
-These packages are built for the =amd64= architecture. Debian/wheezy is
-targeted, and things should work there and on Debian/sid.
+Debian/sid is targeted. Wheezy can probably be made to work, but that's left as
+an exercise for the adventurous.
 
 * Instructions
 
