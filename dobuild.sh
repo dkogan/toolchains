@@ -66,8 +66,6 @@ function buildarch {
 
 
 
-rm -rf gcc-4.9-*(/) || true
-
 local -a arches
 arches=(armel armhf mips mipsel powerpc)
 
