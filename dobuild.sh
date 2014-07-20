@@ -5,8 +5,6 @@ set -x
 export DEB_BUILD_OPTIONS=parallel=4
 
 
-sudo apt-get build-dep -y --no-install-recommends gcc-4.9
-
 local failed
 
 function killdeps {
@@ -79,6 +77,7 @@ for arch ($arches[@]) {
     }
 
 sudo apt-get update
+sudo apt-get build-dep -y --no-install-recommends gcc-4.9
 
 for arch ($arches[@]) {
         buildarch $arch
