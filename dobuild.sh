@@ -86,3 +86,5 @@ for arch ($arches[@]) {
         ((failed)) && echo "WARNING: Failed to build arch $arch; skipping"
         killdeps
     }
+
+return true
