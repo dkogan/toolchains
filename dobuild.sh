@@ -52,7 +52,7 @@ function buildarch {
     test -n "$CURRENT_VER" || return # make sure version was parsed
     export DEBEMAIL=dima@secretsauce.net
     export DEBFULLNAME='Dima Kogan'
-    dch -v ${CURRENT_VER}"dima1" 'New snapshot' || return
+    dch -v ${CURRENT_VER}`date +'dima%Y%m%d'` 'New snapshot' || return
     dch -r '' || return
 
     DEB_TARGET_ARCH=$arch DEB_CROSS_NO_BIARCH=yes with_deps_on_target_arch_pkgs=yes dpkg-buildpackage -us -uc -b || return
