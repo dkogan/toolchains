@@ -40,7 +40,6 @@ function buildarch {
     DEB_TARGET_ARCH=$arch DEB_CROSS_NO_BIARCH=yes with_deps_on_target_arch_pkgs=yes dpkg-buildpackage -d -T control || return
 
     # install deps
-    dpkg --add-architecture $arch
     killdeps
     export DEB_TARGET_GNU_TYPE=$( dpkg-architecture -a${arch} -qDEB_HOST_GNU_TYPE -f 2>/dev/null )
     sudo apt-get -y -f --no-install-recommends install libc6-dev:${arch} linux-libc-dev:${arch} libgcc1:${arch} gcc-4.9-base:${arch} binutils-${DEB_TARGET_GNU_TYPE} || return
@@ -69,7 +68,21 @@ function buildarch {
 
 rm -rf gcc-4.9-*(/) || true
 
-for arch (armel armhf mips mipsel powerpc) {
+local -a arches
+arches=(armel armhf mips mipsel powerpc)
+
+# I kill all foreign arches, and add just the ones I want to keep
+for arch (`dpkg --print-foreign-architectures`) {
+        sudo dpkg --remove-architecture $arch
+    }
+
+for arch ($arches[@]) {
+        sudo dpkg --add-architecture $arch
+    }
+
+sudo apt-get update
+
+for arch ($arches[@]) {
         buildarch $arch
         popd
 
