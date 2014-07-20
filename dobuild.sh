@@ -46,15 +46,6 @@ function buildarch {
                                   {echo "WARNING: couldn't install gcc dependencies for arch $arch. Skipping arch";
                                    return}
 
-    # make new version to indicate that this is my customized build
-    # need to make this non-interactive
-    local CURRENT_VER=`dpkg-parsechangelog | awk '/Version/ {print $2; exit}'`
-    test -n "$CURRENT_VER" || return # make sure version was parsed
-    export DEBEMAIL=dima@secretsauce.net
-    export DEBFULLNAME='Dima Kogan'
-    dch -v ${CURRENT_VER}`date +'dima%Y%m%d'` 'New snapshot' || return
-    dch -r '' || return
-
     DEB_TARGET_ARCH=$arch DEB_CROSS_NO_BIARCH=yes with_deps_on_target_arch_pkgs=yes dpkg-buildpackage -us -uc -b || return
 
     killdeps || return
