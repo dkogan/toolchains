@@ -10,8 +10,8 @@ from the sources for GCC 4.9, as described on the [[https://wiki.debian.org/Mult
 logic to do cross-building is already present in the Debian sources. These
 packages use /very/ light patches to the debianization.
 
-These packages are a stop-gap measure, until packages such as this can be pushed
-into the main Debian repo. When that happens, I will stop building these.
+These packages are a stop-gap measure, until packages such as these can be
+pushed into the main Debian repo. When that happens, I will stop building these.
 
 These are rebuilt every week, so things should be reasonably up-to-date. I
 attempt to build compilers targeting
