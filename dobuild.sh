@@ -11,6 +11,14 @@ function killdeps {
     dpkg -l gcc-4.9-build-deps >& /dev/null && sudo apt-get -y -f remove gcc-4.9-build-deps
 }
 
+function resetarch {
+    local arch=$1
+
+    killdeps
+    sudo apt-get purge -y $(dpkg -l "*:$arch" | awk '/^ii/ {print $2}')
+    sudo dpkg --remove-architecture $arch
+}
+
 function buildarch {
 
     local arch=$1
@@ -66,8 +74,8 @@ arches=(armel armhf mips mipsel powerpc)
 
 # I kill all foreign arches, and add just the ones I want to keep
 for arch (`dpkg --print-foreign-architectures`) {
-        sudo dpkg --remove-architecture $arch
-    }
+    resetarch $arch
+}
 
 for arch ($arches[@]) {
         sudo dpkg --add-architecture $arch
@@ -81,7 +89,7 @@ for arch ($arches[@]) {
         popd
 
         ((failed)) && echo "WARNING: Failed to build arch $arch; skipping"
-        killdeps
-    }
+        resetarch $arch
+}
 
 return true
