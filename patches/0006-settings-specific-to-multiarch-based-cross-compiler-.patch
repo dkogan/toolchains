@@ -10,11 +10,11 @@ I do    build compilers for    C,C++,fortran,go,objc,objcxx,java
  rules.defs | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/rules.defs b/rules.defs
-index 9b7b19a..45b60bf 100644
---- a/rules.defs
-+++ b/rules.defs
-@@ -614,6 +614,7 @@ endif
+Index: debian/rules.defs
+===================================================================
+--- debian.orig/rules.defs
++++ debian/rules.defs
+@@ -620,6 +620,7 @@ endif
  
  java_no_cpus := # arm64 mips mipsel
  java_no_systems :=
@@ -22,7 +22,7 @@ index 9b7b19a..45b60bf 100644
  
  ifneq ($(single_package),yes)
    with_separate_libgcj := yes
-@@ -717,7 +718,6 @@ endif
+@@ -723,7 +724,6 @@ endif
  # - To build gcc and go from separate sources:
  #   with_separate_libgo=yes, with_standalone_go=no
  
@@ -30,7 +30,7 @@ index 9b7b19a..45b60bf 100644
  go_no_cross := no
  
  ifneq (,$(findstring gccgo, $(PKGSOURCE)))
-@@ -831,7 +831,6 @@ ifeq ($(with_d),yes)
+@@ -838,7 +838,6 @@ ifeq ($(with_d),yes)
  endif
  
  # Fortran 95 -------------------
@@ -38,6 +38,3 @@ index 9b7b19a..45b60bf 100644
  fortran_no_cross := no
  
  ifneq ($(with_base_only),yes)
--- 
-2.0.0
-

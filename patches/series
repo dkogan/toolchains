@@ -1,0 +1,7 @@
+0001-rules.conf-more-respecting-of-with_-variables.patch
+0002-D-now-respects-d_no_cross-like-other-languages.patch
+0003-I-now-build-libobjc-ONLY-if-with_common_libs.patch
+0004-Don-t-package-the-source-if-we-re-building-a-cross-c.patch
+0005-Don-t-build-libraries-if-we-re-building-a-cross-comp.patch
+0006-settings-specific-to-multiarch-based-cross-compiler-.patch
+no_longer_build_gcc-xxx-base.patch

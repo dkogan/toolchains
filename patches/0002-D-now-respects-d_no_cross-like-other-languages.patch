@@ -7,11 +7,11 @@ Subject: [PATCH 2/6] D now respects $(d_no_cross) like other languages
  rules.defs | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/rules.defs b/rules.defs
-index 855dda9..386cacc 100644
---- a/rules.defs
-+++ b/rules.defs
-@@ -783,6 +783,9 @@ endif
+Index: debian/rules.defs
+===================================================================
+--- debian.orig/rules.defs
++++ debian/rules.defs
+@@ -789,6 +789,9 @@ endif
  ifeq ($(d_no_snap)-$(single_package),yes-yes)
    with_d := disabled for snapshot build
  endif
@@ -21,6 +21,3 @@ index 855dda9..386cacc 100644
  with_d := $(call envfilt, d, , , $(with_d))
  
  ifeq ($(with_base_only),yes)
--- 
-2.0.0
-

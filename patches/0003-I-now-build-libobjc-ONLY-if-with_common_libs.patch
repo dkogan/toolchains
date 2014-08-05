@@ -9,11 +9,11 @@ certainly seems reasonable
  rules.defs | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/rules.defs b/rules.defs
-index 386cacc..da5ce1a 100644
---- a/rules.defs
-+++ b/rules.defs
-@@ -899,9 +899,9 @@ ifeq ($(with_objc),yes)
+Index: debian/rules.defs
+===================================================================
+--- debian.orig/rules.defs
++++ debian/rules.defs
+@@ -906,9 +906,9 @@ ifeq ($(with_objc),yes)
      with_objcdev := yes
    endif
    # libobjc soname change in 4.7
@@ -25,6 +25,3 @@ index 386cacc..da5ce1a 100644
  
    enabled_languages += objc
  endif
--- 
-2.0.0
-
