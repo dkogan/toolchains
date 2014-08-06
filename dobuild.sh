@@ -37,11 +37,10 @@ function buildarch {
 
     pushd $gccdir
 
-    for patchfile in ../patches/*; do
-        patch -d debian < $patchfile || \
-            {echo "ERROR! Couldn't apply patches Giving up"; \
-             exit}
-    done
+    ( cd debian;
+      QUILT_PATCHES=../../patches quilt push -a
+    ) || {echo "ERROR! Couldn't apply patches Giving up"; \
+          exit}
 
     DEB_TARGET_ARCH=$arch DEB_CROSS_NO_BIARCH=yes with_deps_on_target_arch_pkgs=yes dpkg-buildpackage -d -T control || return
 

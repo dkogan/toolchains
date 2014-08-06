@@ -4,4 +4,3 @@
 0004-Don-t-package-the-source-if-we-re-building-a-cross-c.patch
 0005-Don-t-build-libraries-if-we-re-building-a-cross-comp.patch
 0006-settings-specific-to-multiarch-based-cross-compiler-.patch
-no_longer_build_gcc-xxx-base.patch
