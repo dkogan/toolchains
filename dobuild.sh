@@ -17,6 +17,9 @@ function resetarch {
     killdeps
     sudo apt-get purge -y $(dpkg -l "*:$arch" | awk '/^ii/ {print $2}')
     sudo dpkg --remove-architecture $arch
+
+    export DEB_TARGET_GNU_TYPE=$( dpkg-architecture -a${arch} -qDEB_HOST_GNU_TYPE -f 2>/dev/null )
+    sudo apt-get -y -f remove binutils-${DEB_TARGET_GNU_TYPE}
 }
 
 function buildarch {
