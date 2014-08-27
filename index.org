@@ -21,6 +21,7 @@ attempt to build compilers targeting
 - mips
 - mipsel
 - powerpc
+- arm64
 
 Some subset of these usually fails, and will not be built for that week. As of
 this writing (2014-07-20), mipsel and powerpc are failing. Compilers for the
