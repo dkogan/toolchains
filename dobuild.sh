@@ -72,7 +72,7 @@ function buildarch {
 
 
 local -a arches
-arches=(armel armhf mips mipsel powerpc)
+arches=(armel armhf mips mipsel powerpc arm64)
 
 # I kill all foreign arches, and add just the ones I want to keep
 typeset -U arches_to_clean
