@@ -75,7 +75,9 @@ local -a arches
 arches=(armel armhf mips mipsel powerpc)
 
 # I kill all foreign arches, and add just the ones I want to keep
-for arch (`dpkg --print-foreign-architectures`) {
+typeset -U arches_to_clean
+arches_to_clean=(`dpkg --print-foreign-architectures` $arches[@])
+for arch ($arches_to_clean[@]) {
     resetarch $arch
 }
 
