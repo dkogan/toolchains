@@ -22,6 +22,14 @@ function resetarch {
     sudo apt-get -y -f remove binutils-${DEB_TARGET_GNU_TYPE}
 }
 
+function resetarches_all {
+    typeset -U arches_to_clean
+    arches_to_clean=(`dpkg --print-foreign-architectures` $arches[@])
+    for arch ($arches_to_clean[@]) {
+        resetarch $arch
+    }
+}
+
 function buildarch {
 
     local arch=$1
@@ -75,11 +83,7 @@ local -a arches
 arches=(armel armhf mips mipsel powerpc arm64)
 
 # I kill all foreign arches, and add just the ones I want to keep
-typeset -U arches_to_clean
-arches_to_clean=(`dpkg --print-foreign-architectures` $arches[@])
-for arch ($arches_to_clean[@]) {
-    resetarch $arch
-}
+resetarches_all
 
 for arch ($arches[@]) {
         sudo dpkg --add-architecture $arch
