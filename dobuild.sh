@@ -38,6 +38,8 @@ function buildarch {
     local arch=$1
     failed=1
 
+    sudo dpkg --add-architecture $arch
+
     local gccdir
     gccdir=(gcc-4.9-*(/N[1]))
     [[ -n "$gccdir" ]] && rm -rf $gccdir
@@ -83,16 +85,20 @@ function buildarch {
 
 
 
-# I kill all foreign arches, and add just the ones I want to keep
+# I start with a blank slate
 resetarches_all
 
+# now get the dependencies
 for arch ($arches[@]) {
         sudo dpkg --add-architecture $arch
     }
-
 sudo apt-get update
 sudo apt-get build-dep -y --no-install-recommends gcc-4.9
 
+# and clear stuff out again
+resetarches_all
+
+# Now build one at a time
 for arch ($arches[@]) {
         buildarch $arch
         popd
