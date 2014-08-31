@@ -6,6 +6,9 @@ export DEB_BUILD_OPTIONS=parallel=4
 
 
 local failed
+local -a arches
+arches=(armel armhf mips mipsel powerpc arm64)
+
 
 function killdeps {
     dpkg -l gcc-4.9-build-deps >& /dev/null && sudo apt-get -y -f remove gcc-4.9-build-deps
@@ -79,8 +82,6 @@ function buildarch {
 
 
 
-local -a arches
-arches=(armel armhf mips mipsel powerpc arm64)
 
 # I kill all foreign arches, and add just the ones I want to keep
 resetarches_all
