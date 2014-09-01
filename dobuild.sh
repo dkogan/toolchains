@@ -35,6 +35,8 @@ function resetarches_all {
 
 function buildarch {
 
+    echo "============= building arch $arch ============="
+
     local arch=$1
     failed=1
 
