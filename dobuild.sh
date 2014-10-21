@@ -60,7 +60,7 @@ function buildarch {
     ) || {echo "ERROR! Couldn't apply patches Giving up"; \
           exit}
 
-    DEB_TARGET_ARCH=$arch DEB_CROSS_NO_BIARCH=yes with_deps_on_target_arch_pkgs=yes dpkg-buildpackage -d -T control || return
+    DEB_CROSS_NO_BIARCH=yes with_deps_on_target_arch_pkgs=yes dpkg-buildpackage --target-arch $arch -d -T control || return
 
     # install deps
     killdeps
@@ -77,7 +77,7 @@ function buildarch {
     perl -p -i -e "s/^Source:\s*gcc-4.9\S*/Source: gcc-4.9-$arch/" debian/control
 
     # And now I build
-    DEB_TARGET_ARCH=$arch DEB_CROSS_NO_BIARCH=yes with_deps_on_target_arch_pkgs=yes dpkg-buildpackage -us -uc -b || return
+    DEB_CROSS_NO_BIARCH=yes with_deps_on_target_arch_pkgs=yes dpkg-buildpackage --target-arch $arch -us -uc -b || return
 
     killdeps || return
 
