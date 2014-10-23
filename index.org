@@ -2,82 +2,8 @@
 #+OPTIONS: num:nil
 #+TITLE: Debian cross-gcc snapshot packages
 
-* Overview
+*<2014-10-22 Wed>: Cross toolchains have been pushed to Debian/main, which makes
+APT repo unnecessary*
 
-This is an APT repository that provides unofficial snapshot Debian packages for
-GCC cross-compilers. These compilers use [[https://wiki.debian.org/Multiarch][multi-arch]] libraries. These are built
-from the sources for GCC 4.9, as described on the [[https://wiki.debian.org/MultiarchCrossToolchainBuild#Local_building_of_multiarch_cross-toolchains][Debian wiki]]. The bulk of the
-logic to do cross-building is already present in the Debian sources. These
-packages use /very/ light patches to the debianization.
-
-These packages are a stop-gap measure, until packages such as these can be
-pushed into the main Debian repo. When that happens, I will stop building these.
-
-These are rebuilt every week, so things should be reasonably up-to-date. I
-attempt to build compilers targeting
-
-- armel
-- armhf
-- mips
-- mipsel
-- powerpc
-- arm64
-
-Some subset of these usually fails, and will not be built for that week. As of
-this writing (2014-07-20), mipsel and powerpc are failing. Compilers for the
-following languages are built:
-
-- C
-- C++
-- Fortran
-- Java
-- Go
-- Objective C
-- Objective C++
-
-*Packages are generated weekly by a script and not tested by anybody. Use at
-your own risk.*
-
-Debian/sid is targeted. Wheezy can probably be made to work, but that's left as
-an exercise for the adventurous.
-
-* Instructions
-
-Add to your =/etc/apt/sources.list=:
-
-#+BEGIN_EXAMPLE
-deb     http://toolchains.secretsauce.net unstable main
-deb-src http://toolchains.secretsauce.net unstable main
-#+END_EXAMPLE
-
-Tell APT to pull in packages for the target architecture. For instance:
-
-#+BEGIN_EXAMPLE
-dpkg --add-architecture armel
-#+END_EXAMPLE
-
-Tell APT to trust these packages, do
-
-#+BEGIN_EXAMPLE
-wget -q -O - http://toolchains.secretsauce.net/key.gpg | sudo apt-key add -
-#+END_EXAMPLE
-
-Now we're ready to go:
-
-#+BEGIN_EXAMPLE
-aptitude update
-aptitude install gcc-4.9-arm-linux-gnueabi
-#+END_EXAMPLE
-
-
-* Sources
-
-This repository is populated by a script and a few patches; those appear here:
-
-https://github.com/dkogan/toolchains
-
-* Contact
-
-The maintainer is Dima Kogan <dima at secretsauce dot net>. He knows about these
-packages specifically; for more general cross-building-on-Debian inquiries, read
-the Debian wiki, or ask on IRC: #emdebian on irc.oftc.net.
+Cross-compilers for Debian were hosted here previously, but they're now in plain
+Debian. Get them there!
